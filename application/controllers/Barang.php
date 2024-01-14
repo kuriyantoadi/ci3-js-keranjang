@@ -23,10 +23,15 @@ class Barang extends CI_Controller {
     }
 
     public function tambah_ke_keranjang() {
+
+        $nama_barang = $this->input->post('nama_barang');
+        $harga = $this->input->post('harga');
+        $jumlah = $this->input->post('jumlah');
+        
         $data = array(
-            'nama_barang' => $this->input->post('nama_barang'),
-            'harga' => $this->input->post('harga'),
-            'jumlah' => $this->input->post('jumlah')
+            'nama_barang' => $nama_barang,
+            'harga' => $harga,
+            'jumlah' => $jumlah,
         );
 
         $result = $this->Keranjang_model->tambah_ke_keranjang($data);
