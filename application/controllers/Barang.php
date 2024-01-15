@@ -23,15 +23,22 @@ class Barang extends CI_Controller {
     }
 
     public function tambah_ke_keranjang() {
-
-        $nama_barang = $this->input->post('nama_barang');
+        $namaBarang = $this->input->post('nama_barang');
         $harga = $this->input->post('harga');
         $jumlah = $this->input->post('jumlah');
-        
+        $idBarang = $this->input->post('id_barang');
+
+        // Pengecekan apakah id_barang sudah ada dalam keranjang
+        if ($this->Keranjang_model->cek_id_barang($idBarang)) {
+            echo json_encode(['message' => 'Barang sudah ada dalam keranjang.']);
+            return;
+        }
+
         $data = array(
-            'nama_barang' => $nama_barang,
+            'nama_barang' => $namaBarang,
             'harga' => $harga,
             'jumlah' => $jumlah,
+            'id_barang' => $idBarang,
         );
 
         $result = $this->Keranjang_model->tambah_ke_keranjang($data);
@@ -42,4 +49,13 @@ class Barang extends CI_Controller {
             echo json_encode(['message' => 'Gagal menambahkan barang ke keranjang.']);
         }
     }
+
+    public function keranjang_hapus($id_barang)
+    {
+        $test = $this->Keranjang_model->keranjang_hapus($id_barang);
+        redirect('Barang');
+    }
+
+
+
 }
